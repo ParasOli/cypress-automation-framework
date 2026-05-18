@@ -1,16 +1,13 @@
-// ***********************************************************
-// This example support/e2e.ts is processed and
-// loaded automatically before your test files.
-//
-// This is a great place to put global configuration and
-// behavior that modifies Cypress.
-//
-// You can change the location of this file or turn off
-// automatically serving support files with the
-// 'supportFile' configuration option.
-//
-// You can read more here:
-// https://on.cypress.io/configuration
-// ***********************************************************
+
 
 import './commands'
+
+// saucedemo uses a service worker that serves cached HTML and bypasses the
+// Cypress proxy, causing 404s on navigation. Unregister it before each test.
+Cypress.on('window:before:load', (win) => {
+  if (win.navigator.serviceWorker) {
+    win.navigator.serviceWorker.getRegistrations().then((registrations) => {
+      registrations.forEach((r) => r.unregister())
+    })
+  }
+})
