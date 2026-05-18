@@ -1,0 +1,12 @@
+import { defineConfig } from "cypress";
+
+export default defineConfig({
+  allowCypressEnv: false,
+
+  e2e: {
+    baseUrl: "https://www.saucedemo.com/",
+    setupNodeEvents(_on, _config) {
+
+    },
+  },
+});
