@@ -4,3 +4,8 @@ declare namespace Cypress {
     loginSession(username: string, password: string): Chainable<void>
   }
 }
+declare namespace Cypress {
+  interface Chainable {
+    visitInventory(): Chainable<void>
+  }
+}

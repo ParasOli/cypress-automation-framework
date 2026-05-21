@@ -3,7 +3,7 @@ import { defineConfig } from "cypress";
 export default defineConfig({
   allowCypressEnv: false,
   chromeWebSecurity: false,
-  defaultCommandTimeout: 10000,
+  defaultCommandTimeout: 5000,
   viewportWidth: 1280,
   viewportHeight: 720,
   screenshotOnRunFailure: true,
