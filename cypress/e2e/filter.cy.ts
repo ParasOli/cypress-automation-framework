@@ -4,7 +4,7 @@ describe('Saucedemo - Filter', () => {
 
 
   before(() => {
-    cy.loginSession('standard_user', 'secret_sauce')
+    cy.loginSession(Cypress.env('USERNAME') as string, Cypress.env('PASSWORD') as string)
   })
 
   beforeEach(()=>{

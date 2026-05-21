@@ -1,7 +1,11 @@
 import { defineConfig } from "cypress";
 
 export default defineConfig({
-  allowCypressEnv: false,
+  allowCypressEnv: true,
+  env: {
+    USERNAME: 'standard_user',
+    PASSWORD: 'secret_sauce',
+  },
   chromeWebSecurity: false,
   defaultCommandTimeout: 5000,
   viewportWidth: 1280,

@@ -2,7 +2,7 @@ import loginPage from "../pages/loginPage"
 
 describe('Login', () => {
   it('should redirect to inventory page on successful login', () => {
-    cy.login('standard_user', 'secret_sauce');
+    cy.login(Cypress.env('USERNAME') as string, Cypress.env('PASSWORD') as string);
     cy.url().should('include', 'inventory.html')
 
   })
