@@ -1,3 +1,5 @@
+import filterPage from '../pages/filterPage'
+
 describe('Saucedemo - Filter', () => {
 
 
@@ -12,81 +14,46 @@ cy.visitInventory()
 
 
   it('Validate UI module of the filter', () => {
-    const expectedOptions = [
+    filterPage.validateOptions([
       'Name (A to Z)',
       'Name (Z to A)',
       'Price (low to high)',
       'Price (high to low)',
-    ]
-
-    cy.get('[data-test="product-sort-container"]').should('be.visible')
-
-    expectedOptions.forEach(option => {
-      cy.get('[data-test="product-sort-container"]')
-        .find('option')
-        .contains(option)
-        .should('exist')
-    })
+    ])
   })
 
-
   it('should sort products by price low to high', () => {
+    filterPage.selectSort('Price (low to high)')
+    filterPage.validateSelectedOption('Price (low to high)')
 
-    cy.get('[data-test="product-sort-container"]')
-      .select('Price (low to high)')
-    cy.get('[data-test="product-sort-container"]')
-      .find('option:selected').should('have.text', 'Price (low to high)')
-
-    cy.get('[data-test="inventory-item-price"]').then(($prices) => {
-
-      const prices = [...$prices].map(el =>
-        parseFloat(el.innerText.replace('$', ''))
-      )
+    filterPage.getPrices().then(prices => {
       expect(prices).to.deep.equal([...prices].sort((a, b) => a - b))
     })
   })
 
-
   it('should sort products by price high to low', () => {
+    filterPage.selectSort('Price (high to low)')
+    filterPage.validateSelectedOption('Price (high to low)')
 
-    cy.get('[data-test="product-sort-container"]')
-      .select('Price (high to low)')
-    cy.get('[data-test="product-sort-container"]')
-      .find('option:selected').should('have.text', 'Price (high to low)')
-
-    cy.get('[data-test="inventory-item-price"]').then(($prices) => {
-
-      const prices = [...$prices].map(el =>
-        parseFloat(el.innerText.replace('$', ''))
-      )
+    filterPage.getPrices().then(prices => {
       expect(prices).to.deep.equal([...prices].sort((a, b) => b - a))
     })
   })
 
   it('should sort products by name A to Z', () => {
+    filterPage.selectSort('Name (A to Z)')
+    filterPage.validateSelectedOption('Name (A to Z)')
 
-    cy.get('[data-test="product-sort-container"]')
-      .select('Name (A to Z)')
-    cy.get('[data-test="product-sort-container"]')
-      .find('option:selected').should('have.text', 'Name (A to Z)')
-
-    cy.get('[data-test="inventory-item-name"]').then(($names) => {
-
-      const names = [...$names].map(el => el.innerText)
+    filterPage.getNames().then(names => {
       expect(names).to.deep.equal([...names].sort())
     })
   })
 
   it('should sort products by name Z to A', () => {
+    filterPage.selectSort('Name (Z to A)')
+    filterPage.validateSelectedOption('Name (Z to A)')
 
-    cy.get('[data-test="product-sort-container"]')
-      .select('Name (Z to A)')
-    cy.get('[data-test="product-sort-container"]')
-      .find('option:selected').should('have.text', 'Name (Z to A)')
-
-    cy.get('[data-test="inventory-item-name"]').then(($names) => {
-
-      const names = [...$names].map(el => el.innerText)
+    filterPage.getNames().then(names => {
       expect(names).to.deep.equal([...names].sort().reverse())
     })
   })
