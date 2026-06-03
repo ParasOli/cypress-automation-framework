@@ -82,6 +82,9 @@ jobs:
           allure_history: allure-history
           keep_reports: 3
 
+      - name: Fix permissions on allure-history
+        run: sudo chmod -R 777 allure-history && sudo rm -rf allure-history/.git
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
