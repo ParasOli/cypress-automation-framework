@@ -72,10 +72,12 @@ jobs:
       - name: Get Allure history from gh-pages
         run: |
           if git ls-remote --exit-code origin gh-pages > /dev/null 2>&1; then
-            echo "gh-pages branch found, fetching history..."
+            echo "gh-pages branch found, extracting history..."
             git fetch origin gh-pages --depth=1
             mkdir -p gh-pages
-            git --work-tree=gh-pages checkout FETCH_HEAD -- . 2>/dev/null || true
+            git archive FETCH_HEAD | tar -x -C gh-pages/
+            echo "History extracted:"
+            ls gh-pages/last-history 2>/dev/null || echo "No last-history folder yet"
           else
             echo "gh-pages branch does not exist yet, starting fresh."
           fi
