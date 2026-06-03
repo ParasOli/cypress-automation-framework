@@ -1,10 +1,12 @@
 import { defineConfig } from "cypress";
+import allureWriter from "@shelex/cypress-allure-plugin/writer";
 
 export default defineConfig({
   allowCypressEnv: true,
   env: {
     USERNAME: 'standard_user',
     PASSWORD: 'secret_sauce',
+    allure: true,
   },
   chromeWebSecurity: false,
   defaultCommandTimeout: 5000,
@@ -20,8 +22,9 @@ export default defineConfig({
       runMode: 1,
       openMode: 0,
     },
-    setupNodeEvents(_on, _config) {
-
+    setupNodeEvents(on, config) {
+      allureWriter(on, config);
+      return config;
     },
   },
 });

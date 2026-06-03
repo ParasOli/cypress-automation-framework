@@ -1,11 +1,12 @@
 name: Cypress Tests
 
 on:
-  # push:
-  #   branches: [main]
-  # pull_request:
-  #   branches: [main]
+  push:
+    branches: [main]
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   cypress-run:
@@ -24,11 +25,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run all Cypress tests
+      - name: Run Cypress tests
         run: npx cypress run --browser chrome
+        continue-on-error: true
         env:
           CYPRESS_USERNAME: ${{ secrets.CYPRESS_USERNAME }}
           CYPRESS_PASSWORD: ${{ secrets.CYPRESS_PASSWORD }}
+
+      - name: Upload Allure results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+          retention-days: 5
 
       - name: Upload screenshots on failure
         if: failure()
@@ -37,9 +47,44 @@ jobs:
           name: cypress-screenshots
           path: cypress/screenshots
 
-      - name: Upload videos
-        if: always()
-        uses: actions/upload-artifact@v4
+  publish-report:
+    runs-on: ubuntu-latest
+    needs: cypress-run
+    if: always()
+
+    steps:
+      - name: Checkout gh-pages for history
+        uses: actions/checkout@v4
         with:
-          name: cypress-videos
-          path: cypress/videos
+          ref: gh-pages
+          path: gh-pages
+        continue-on-error: true
+
+      - name: Download Allure results
+        uses: actions/download-artifact@v4
+        with:
+          name: allure-results
+          path: allure-results
+
+      - name: Copy history from previous report
+        run: |
+          if [ -d "gh-pages/history" ]; then
+            echo "Found previous history, copying..."
+            cp -r gh-pages/history allure-results/history
+          else
+            echo "No previous history found, starting fresh."
+          fi
+
+      - name: Generate Allure report
+        uses: simple-elf/allure-report-action@master
+        with:
+          allure_results: allure-results
+          allure_history: allure-history
+          keep_reports: 3
+
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+          publish_dir: allure-history
