@@ -37,6 +37,27 @@ class CartPage {
     return this
   }
 
+  removeFromCart(productSlug: string) {
+    cy.get(`[data-test="remove-${productSlug}"]`).click()
+    return this
+  }
+
+  getCartItemNames() {
+    return cy.get(this.cartItemName).then(($els) =>
+      [...$els].map((el) => el.innerText)
+    )
+  }
+
+  continueShopping() {
+    cy.get(this.continueShoppingBtn).click()
+    return this
+  }
+
+  proceedToCheckout() {
+    cy.get(this.checkoutBtn).click()
+    return this
+  }
+
   clearCart() {
     cy.get(this.cartLink).click()
     cy.get('body').then(($body) => {

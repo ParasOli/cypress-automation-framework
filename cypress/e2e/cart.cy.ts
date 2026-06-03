@@ -44,4 +44,51 @@ describe('Saucedemo - Cart', () => {
     cartPage.validateBadgeNotExist()
   })
 
+  it('should navigate to cart page when cart icon is clicked', () => {
+    cartPage.goToCart()
+    cy.url().should('include', '/cart.html')
+  })
+
+  it('should show added item with correct name in the cart', () => {
+    cy.get('[data-test="inventory-item-name"]').first().invoke('text').then((itemName) => {
+      cartPage.addToCart(PRODUCTS.backpack)
+      cartPage.goToCart()
+      cartPage.getCartItemNames().then((names) => {
+        expect(names).to.include(itemName)
+      })
+    })
+  })
+
+  it('should show correct item count in cart page after adding multiple items', () => {
+    cartPage.addToCart(PRODUCTS.backpack)
+    cartPage.addToCart(PRODUCTS.bikeLight)
+    cartPage.addToCart(PRODUCTS.boltTShirt)
+
+    cartPage.goToCart()
+    cartPage.validateCartItemCount(3)
+  })
+
+  it('should remove item from inside the cart page', () => {
+    cartPage.addToCart(PRODUCTS.backpack)
+    cartPage.goToCart()
+    cartPage.validateCartItemCount(1)
+
+    cartPage.removeFromCart(PRODUCTS.backpack)
+    cartPage.validateCartItemCount(0)
+    cartPage.validateBadgeNotExist()
+  })
+
+  it('should return to inventory when continue shopping is clicked', () => {
+    cartPage.goToCart()
+    cartPage.continueShopping()
+    cy.url().should('include', '/inventory.html')
+  })
+
+  it('should navigate to checkout when checkout button is clicked', () => {
+    cartPage.addToCart(PRODUCTS.backpack)
+    cartPage.goToCart()
+    cartPage.proceedToCheckout()
+    cy.url().should('include', '/checkout-step-one.html')
+  })
+
 })
