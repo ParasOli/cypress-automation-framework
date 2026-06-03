@@ -1,6 +1,4 @@
 class CartPage {
-  addToCartBtn = (index: number) => `[data-test="add-to-cart"]:eq(${index})`
-  removeBtn = (index: number) => `[data-test="remove"]:eq(${index})`
   cartBadge = '[data-test="shopping-cart-badge"]'
   cartLink = '[data-test="shopping-cart-link"]'
   cartItem = '.cart_item'
@@ -9,13 +7,13 @@ class CartPage {
   continueShoppingBtn = '[data-test="continue-shopping"]'
   checkoutBtn = '[data-test="checkout"]'
 
-  addItemToCart(index: number) {
-    cy.get(this.addToCartBtn(index)).click()
+  addToCart(productSlug: string) {
+    cy.get(`[data-test="add-to-cart-${productSlug}"]`).click()
     return this
   }
 
-  removeItemFromCart(index: number) {
-    cy.get(this.removeBtn(index)).click()
+  removeFromInventory(productSlug: string) {
+    cy.get(`[data-test="remove-${productSlug}"]`).click()
     return this
   }
 
@@ -24,14 +22,13 @@ class CartPage {
     return this
   }
 
-  validateCartBadge(count: number) {
+  validateBadgeCount(count: number) {
     cy.get(this.cartBadge).should('have.text', String(count))
     return this
   }
 
-  validateCartIsEmpty() {
+  validateBadgeNotExist() {
     cy.get(this.cartBadge).should('not.exist')
-    cy.get(this.cartItem).should('not.exist')
     return this
   }
 
@@ -40,10 +37,15 @@ class CartPage {
     return this
   }
 
-  getCartItemNames() {
-    return cy.get(this.cartItemName).then(($els) =>
-      [...$els].map(el => el.innerText)
-    )
+  clearCart() {
+    cy.get(this.cartLink).click()
+    cy.get('body').then(($body) => {
+      if ($body.find('[data-test^="remove-"]').length > 0) {
+        cy.get('[data-test^="remove-"]').each(($btn) => {
+          cy.wrap($btn).click()
+        })
+      }
+    })
   }
 }
 
