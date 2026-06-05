@@ -11,7 +11,7 @@ End-to-end test automation framework for [Saucedemo](https://www.saucedemo.com) 
 
 **[View Latest Allure Report](https://parasoli.github.io/cypress-automation-framework/)**
 
-> The report is auto-published to GitHub Pages on every push to `main`. The last **3 runs** are retained with full history and trend data.
+> 
 
 ---
 
