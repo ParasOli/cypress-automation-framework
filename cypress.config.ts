@@ -4,8 +4,6 @@ import allureWriter from "@shelex/cypress-allure-plugin/writer";
 export default defineConfig({
   allowCypressEnv: true,
   env: {
-    USERNAME: 'standard_user',
-    PASSWORD: 'secret_sauce',
     allure: true,
   },
   chromeWebSecurity: false,
