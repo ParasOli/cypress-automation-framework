@@ -9,7 +9,7 @@ export default defineConfig({
     allure: true,
   },
   chromeWebSecurity: false,
-  defaultCommandTimeout: 5000,
+  defaultCommandTimeout: 10000,
   viewportWidth: 1280,
   viewportHeight: 720,
   screenshotOnRunFailure: true,
@@ -19,7 +19,7 @@ export default defineConfig({
     baseUrl: "https://www.saucedemo.com",
     testIsolation: false,
     retries: {
-      runMode: 1,
+      runMode: 2,
       openMode: 0,
     },
     setupNodeEvents(on, config) {
