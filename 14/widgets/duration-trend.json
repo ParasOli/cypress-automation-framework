@@ -1,0 +1,42 @@
+[
+  {
+    "buildOrder": 14,
+    "reportUrl": "https://ParasOli.github.io/cypress-automation-framework/14",
+    "reportName": "Allure Report with history",
+    "data": {
+      "duration": 1939218
+    }
+  },
+  {
+    "buildOrder": 13,
+    "reportUrl": "https://ParasOli.github.io/cypress-automation-framework/13",
+    "reportName": "Allure Report with history",
+    "data": {
+      "duration": 1587741
+    }
+  },
+  {
+    "buildOrder": 12,
+    "reportUrl": "https://ParasOli.github.io/cypress-automation-framework/12",
+    "reportName": "Allure Report with history",
+    "data": {
+      "duration": 899267
+    }
+  },
+  {
+    "buildOrder": 11,
+    "reportUrl": "https://ParasOli.github.io/cypress-automation-framework/11",
+    "reportName": "Allure Report with history",
+    "data": {
+      "duration": 634833
+    }
+  },
+  {
+    "buildOrder": 10,
+    "reportUrl": "https://ParasOli.github.io/cypress-automation-framework/10",
+    "reportName": "Allure Report with history",
+    "data": {
+      "duration": 14423
+    }
+  }
+]

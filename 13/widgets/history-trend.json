@@ -1,0 +1,67 @@
+[
+  {
+    "buildOrder": 13,
+    "reportUrl": "https://ParasOli.github.io/cypress-automation-framework/13",
+    "reportName": "Allure Report with history",
+    "data": {
+      "failed": 1,
+      "broken": 0,
+      "skipped": 0,
+      "passed": 25,
+      "unknown": 0,
+      "total": 26
+    }
+  },
+  {
+    "buildOrder": 12,
+    "reportUrl": "https://ParasOli.github.io/cypress-automation-framework/12",
+    "reportName": "Allure Report with history",
+    "data": {
+      "failed": 1,
+      "broken": 0,
+      "skipped": 0,
+      "passed": 25,
+      "unknown": 0,
+      "total": 26
+    }
+  },
+  {
+    "buildOrder": 11,
+    "reportUrl": "https://ParasOli.github.io/cypress-automation-framework/11",
+    "reportName": "Allure Report with history",
+    "data": {
+      "failed": 1,
+      "broken": 0,
+      "skipped": 0,
+      "passed": 25,
+      "unknown": 0,
+      "total": 26
+    }
+  },
+  {
+    "buildOrder": 10,
+    "reportUrl": "https://ParasOli.github.io/cypress-automation-framework/10",
+    "reportName": "Allure Report with history",
+    "data": {
+      "failed": 0,
+      "broken": 0,
+      "skipped": 0,
+      "passed": 19,
+      "unknown": 0,
+      "total": 19
+    }
+  },
+  {
+    "buildOrder": 9,
+    "reportUrl": "https://ParasOli.github.io/cypress-automation-framework/9",
+    "reportName": "Allure Report with history",
+    "data": {
+      "failed": 0,
+      "broken": 0,
+      "skipped": 0,
+      "passed": 19,
+      "unknown": 0,
+      "total": 19
+    }
+  }
+]
