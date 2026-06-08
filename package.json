@@ -17,5 +17,8 @@
     "allure-commandline": "^2.30.0",
     "cypress": "^15.15.0",
     "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "dotenv": "^17.4.2"
   }
 }

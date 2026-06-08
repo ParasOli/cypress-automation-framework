@@ -1,10 +1,15 @@
 import { defineConfig } from "cypress";
 import allureWriter from "@shelex/cypress-allure-plugin/writer";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export default defineConfig({
   allowCypressEnv: true,
   env: {
     allure: true,
+    USERNAME: process.env.CYPRESS_USERNAME,
+    PASSWORD: process.env.CYPRESS_PASSWORD,
   },
   chromeWebSecurity: false,
   defaultCommandTimeout: 10000,
