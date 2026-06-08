@@ -116,21 +116,32 @@ jobs:
         with:
           allure_results: allure-results
           allure_history: allure-history
-          keep_reports: 3
+          keep_reports: 5
 
-      - name: Keep only the last 3 run reports
+      - name: Keep only the last 5 run reports
         run: |
           cd allure-history
           # Numbered folders (1, 2, 3, ...) are individual run reports.
-          # Keep the 3 most recent, delete the rest. The root index.html
+          # Keep the 5 most recent, delete the rest. The root index.html
           # always redirects to the latest run, which is preserved.
-          OLD_REPORTS=$(ls -d */ 2>/dev/null | grep -E '^[0-9]+/$' | sed 's#/##' | sort -n | head -n -3)
+          OLD_REPORTS=$(ls -d */ 2>/dev/null | grep -E '^[0-9]+/$' | sed 's#/##' | sort -n | head -n -5)
           if [ -n "$OLD_REPORTS" ]; then
             echo "Removing old reports: $OLD_REPORTS"
             for d in $OLD_REPORTS; do rm -rf "$d"; done
           else
-            echo "3 or fewer reports present, nothing to trim."
+            echo "5 or fewer reports present, nothing to trim."
           fi
+
+      - name: Limit trend chart to last 5 runs
+        run: |
+          # The trend widgets (history/duration/retry/categories-trend.json)
+          # accumulate one entry per run forever. They are ordered newest-first,
+          # so [0:5] keeps the 5 most recent. Trimming last-history too caps the
+          # data carried into the next run.
+          find allure-history -name '*-trend.json' | while read -r f; do
+            tmp=$(mktemp)
+            jq '.[0:5]' "$f" > "$tmp" && mv "$tmp" "$f"
+          done
 
       - name: Fix permissions on allure-history
         run: sudo chmod -R 777 allure-history && sudo rm -rf allure-history/.git
