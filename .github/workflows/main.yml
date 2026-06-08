@@ -118,6 +118,12 @@ jobs:
           allure_history: allure-history
           keep_reports: 5
 
+      # The Allure action runs in a Docker container as root, so files under
+      # allure-history (e.g. last-history) are root-owned. Fix permissions
+      # BEFORE the trim steps so the runner user can rewrite them.
+      - name: Fix permissions on allure-history
+        run: sudo chmod -R 777 allure-history && sudo rm -rf allure-history/.git
+
       - name: Keep only the last 5 run reports
         run: |
           cd allure-history
@@ -142,9 +148,6 @@ jobs:
             tmp=$(mktemp)
             jq '.[0:5]' "$f" > "$tmp" && mv "$tmp" "$f"
           done
-
-      - name: Fix permissions on allure-history
-        run: sudo chmod -R 777 allure-history && sudo rm -rf allure-history/.git
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
